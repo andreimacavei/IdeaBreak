@@ -21,7 +21,6 @@ class IdeaList {
         e.stopImmediatePropagation();
 
         const ideaId = e.target.parentElement.parentElement.dataset.id;
-        console.log(ideaId);
         
         this.deleteIdea(ideaId);
       }
