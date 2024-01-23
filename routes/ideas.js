@@ -9,7 +9,7 @@ router.get('/', async (req, res) => {
     const ideas = await Idea.find();
     res.json({ success: true, data: ideas });
   } catch (err) {
-    console.log(error);
+    console.log(err);
     res.status(500).json({ success: false, error: err.message });
   }
   
