@@ -48,6 +48,13 @@ router.post('/', async (req, res) => {
 // Update an idea
 router.put('/:id', async (req, res) => {
   try {
+    const idea = await Idea.findById(req.params.id);
+
+    // If username does not match idea username
+    if (idea.username !== req.body.username) {
+      return res.status(403).json({ success: false, error: 'Unauthorized' });
+    }
+
     const updatedIdea = await Idea.findByIdAndUpdate(
       req.params.id,
       {
@@ -60,7 +67,7 @@ router.put('/:id', async (req, res) => {
       {new: true}
     );
 
-    res.json({ success: true, data: updatedIdea });
+    return res.json({ success: true, data: updatedIdea });
   } catch (error) {
     console.log(error)
     res.status(500).json({ success: false, error: error.message });
@@ -70,6 +77,14 @@ router.put('/:id', async (req, res) => {
 // Delete an idea
 router.delete('/:id', async (req, res) => {
   try {
+    const idea = await Idea.findById(req.params.id);
+    
+    // // If username does not match idea username
+    if (idea.username !== req.body.username) {
+      return res.status(403).json({ success: false, error: 'Unauthorized' });
+    }
+    
+
     await Idea.findByIdAndDelete(req.params.id);
     res.json({ success: true, data: {} });
   } catch (error) {
